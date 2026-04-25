@@ -1,0 +1,12 @@
+{
+  "name": "reverse-terminal",
+  "version": "2.0.0",
+  "description": "ReverseTerminal - Node.js port",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "ini": "^4.1.1"
+  }
+}

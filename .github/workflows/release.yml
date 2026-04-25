@@ -1,0 +1,54 @@
+name: Release
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Smoke test (syntax check)
+        run: node --check server.js && echo "Syntax OK"
+
+      - name: Bundle into zip for release
+        run: |
+          zip -r ReverseTerminal.zip server.js package.json package-lock.json resources/ \
+            --exclude "*.git*"
+
+      - name: Get short SHA
+        id: sha
+        run: echo "short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: build-${{ steps.sha.outputs.short }}
+          name: "Build ${{ steps.sha.outputs.short }}"
+          body: |
+            Auto-built from commit ${{ github.sha }}
+            Branch: ${{ github.ref_name }}
+
+            **Deploy instructions:**
+            1. Upload `server.js`, `package.json`, `resources/` to your server
+            2. Run `npm install` once
+            3. Start with `node server.js`
+          files: |
+            ReverseTerminal.zip
+            server.js

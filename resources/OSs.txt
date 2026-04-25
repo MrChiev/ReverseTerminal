@@ -1,0 +1,10 @@
+# OSs.txt - ReverseTerminal OS database
+# Format: <Name> <URL>
+# URL must be a direct link to a .tar.gz or .tar.xz rootfs archive (amd64/x86_64)
+# The "Main" entry is the current build number used for update checks
+
+Main 202305171
+Ubuntu-22 https://cdimage.ubuntu.com/ubuntu-base/releases/22.04/release/ubuntu-base-22.04-base-amd64.tar.gz
+Ubuntu-20 https://cdimage.ubuntu.com/ubuntu-base/releases/20.04/release/ubuntu-base-20.04-base-amd64.tar.gz
+Debian https://github.com/debuerreotype/docker-debian-artifacts/raw/dist-amd64/bullseye/slim/rootfs.tar.xz
+Alpine https://dl-cdn.alpinelinux.org/alpine/v3.19/releases/x86_64/alpine-minirootfs-3.19.1-x86_64.tar.gz
